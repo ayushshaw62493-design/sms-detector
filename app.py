@@ -1,3 +1,16 @@
+
+import nltk
+import os
+
+# Add the local nltk_data folder to NLTK search path
+nltk_data_path = os.path.join(os.path.dirname(__file__), "nltk_data")
+nltk.data.path.append(nltk_data_path)
+
+from nltk.tokenize import word_tokenize
+
+def transform_text(text):
+    tokens = word_tokenize(text)
+    return " ".join(tokens)
 import streamlit as st
 import pickle
 import string
