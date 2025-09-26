@@ -12,6 +12,10 @@ from nltk.stem.porter import PorterStemmer
 nltk_data_path = os.path.join(os.path.dirname(__file__), "nltk_data")
 nltk.data.path.append(nltk_data_path)
 
+# Ensure required resources exist
+nltk.download('punkt', download_dir=nltk_data_path, quiet=True)
+nltk.download('stopwords', download_dir=nltk_data_path, quiet=True)
+
 ps = PorterStemmer()
 
 # ----------------------------
@@ -19,22 +23,18 @@ ps = PorterStemmer()
 # ----------------------------
 def transform_text(text):
     text = text.lower()
-    text = nltk.word_tokenize(text)
+    text = nltk.word_tokenize(text)  # tokenization
 
     # Remove non-alphanumeric characters
-    y = [i for i in text if i.isalnum()]
-    text = y[:]
-    y.clear()
+    text = [i for i in text if i.isalnum()]
 
     # Remove stopwords and punctuation
-    y = [i for i in text if i not in stopwords.words('english') and i not in string.punctuation]
-    text = y[:]
-    y.clear()
+    text = [i for i in text if i not in stopwords.words('english') and i not in string.punctuation]
 
     # Apply stemming
-    y = [ps.stem(i) for i in text]
+    text = [ps.stem(i) for i in text]
 
-    return " ".join(y)
+    return " ".join(text)
 
 # ----------------------------
 # Load vectorizer and model
