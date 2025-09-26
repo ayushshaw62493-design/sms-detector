@@ -6,7 +6,23 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import re
+# Page config
+st.set_page_config(
+    page_title="SpaM-DeTectoR(A_S)",
+    page_icon="🚀",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
+# Hide Streamlit’s default menu, footer, and header
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 # ----------------------------
 # NLTK Setup
 # ----------------------------
