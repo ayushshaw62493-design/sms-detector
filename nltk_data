@@ -1,5 +1,0 @@
-import nltk
-
-# Download punkt and punkt_tab to the local nltk_data folder
-nltk.download('punkt', download_dir='nltk_data')
-nltk.download('punkt_tab', download_dir='nltk_data')
