@@ -1,15 +1,9 @@
-
 import nltk
-import os
-
-# Add the local nltk_data folder to NLTK search path
-nltk_data_path = os.path.join(os.path.dirname(__file__), "nltk_data")
-nltk.data.path.append(nltk_data_path)
-
+nltk.download('punkt', quiet=True)  # only download official punkt
 from nltk.tokenize import word_tokenize
 
 def transform_text(text):
-    tokens = word_tokenize(text)
+    tokens = word_tokenize(text)  # no 'punkt_tab'
     return " ".join(tokens)
 import streamlit as st
 import pickle
