@@ -11,7 +11,9 @@ import re
 # NLTK Setup
 # ----------------------------
 nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)  # Fix for newer NLTK versions
 nltk.download('stopwords', quiet=True)
+
 ps = PorterStemmer()
 stop_words = set(stopwords.words('english'))
 
@@ -60,36 +62,31 @@ model = MultinomialNB()
 model.fit(X, y)
 
 # ----------------------------
-# Background + Animation
+# Animated background + rupees
 # ----------------------------
 st.markdown("""
 <style>
-/* Full page background (no gaps) */
+/* Full page background */
 .stApp {
     background-image: url('https://static.vecteezy.com/system/resources/previews/048/479/467/non_2x/abstract-wave-lines-luxury-shiny-gold-color-on-black-background-futuristic-flow-of-shining-gold-line-waves-suitable-for-banners-posters-covers-brochures-flyers-websites-free-vector.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
 }
 
-/* Remove Streamlit padding */
-.main .block-container {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-    margin-top: 0rem;
-    margin-bottom: 0rem;
+/* Remove top padding */
+.css-18e3th9, .css-1d391kg {
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
 }
 
-/* Overlay for readability */
+/* Semi-transparent overlay for readability */
 .stApp::before {
     content: "";
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.35);
     z-index: -1;
 }
 
@@ -104,13 +101,12 @@ st.markdown("""
 
 .rupee {
   position: fixed;
-  font-size: 28px;
+  font-size: 24px;
   color: gold;
   animation-name: floatAround;
   animation-duration: 15s;
   animation-iteration-count: infinite;
   pointer-events: none;
-  z-index: 999;
 }
 
 .rupee:nth-child(1){animation-delay:0s;}
@@ -127,25 +123,26 @@ st.markdown("""
 <div class="rupee">₹</div>
 """, unsafe_allow_html=True)
 
+
 # ----------------------------
 # Streamlit UI
 # ----------------------------
 st.title("📩 Email/SMS Spam Classifier")
 
-input_sms = st.text_area("✉️ Enter the message")
+input_sms = st.text_area("✍️ Enter the message")
 
-if st.button('🔍 Predict'):
+if st.button('Predict'):
     transformed_sms = transform_text(input_sms)
     vector_input = tfidf.transform([transformed_sms])
     result = model.predict(vector_input)[0]
 
     if result == 1:
         st.markdown(
-            "<div style='background-color:rgba(255,0,0,0.6); padding:20px; border-radius:10px; color:white; font-size:24px; text-align:center;'>🚨 Spam 🚨</div>",
+            "<div style='background-color:rgba(255,0,0,0.5); padding:20px; border-radius:10px; color:white; font-size:24px'>🚨 Spam</div>",
             unsafe_allow_html=True
         )
     else:
         st.markdown(
-            "<div style='background-color:rgba(0,128,0,0.6); padding:20px; border-radius:10px; color:white; font-size:24px; text-align:center;'>✅ Not Spam ✅</div>",
+            "<div style='background-color:rgba(0,128,0,0.5); padding:20px; border-radius:10px; color:white; font-size:24px'>✅ Not Spam</div>",
             unsafe_allow_html=True
         )
